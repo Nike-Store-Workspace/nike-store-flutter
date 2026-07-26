@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "nike_store_flutter",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/presentation/main/main.dart"
+        },
+        {
+            "name": "nike_store_flutter (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/presentation/main/main.dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "nike_store_flutter (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/presentation/main/main.dart",
+            "flutterMode": "release"
+        }
+    ]
+}
