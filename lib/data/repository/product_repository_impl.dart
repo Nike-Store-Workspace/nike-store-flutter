@@ -1,12 +1,8 @@
-import 'package:dio/dio.dart';
+import 'package:nike_store_flutter/common/http_client.dart';
 import 'package:nike_store_flutter/data/datasource/product_datasource_impl.dart';
 import 'package:nike_store_flutter/domain/datasource/product_datasource.dart';
 import 'package:nike_store_flutter/domain/models/product.dart';
 import 'package:nike_store_flutter/domain/repository/product_repository.dart';
-
-final httpClient = Dio(
-  BaseOptions(baseUrl: 'http://192.168.70.186:8090/api/v1/'),
-);
 
 final productRepository = ProductRepositoryImpl(
   datasource: RemoteProductDatasourceImpl(httpClient: httpClient),
