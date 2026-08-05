@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:nike_store_flutter/data/repository/product_repository_impl.dart';
+import 'package:nike_store_flutter/domain/models/product.dart';
 import 'package:nike_store_flutter/presentation/theme/MyTheme.dart';
 
 void main() {
@@ -58,6 +60,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final products = productRepository.getAll(ProductSort.priceAsc);
+    products
+        .then((value) {
+          debugPrint("it is a response $value");
+        })
+        .catchError((e) {
+          debugPrint(e.toString());
+        });
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
