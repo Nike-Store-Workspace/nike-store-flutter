@@ -37,9 +37,14 @@ class BannerSlider extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 10),
             child: SmoothPageIndicator(
               controller: pageController,
-              count: 9,
+              count: banners.length,
               axisDirection: Axis.horizontal,
-              effect: WormEffect(dotWidth: 10, dotHeight: 5),
+              effect: WormEffect(
+                dotWidth: 20,
+                dotHeight: 3,
+                spacing: 3,
+                activeDotColor: Theme.of(context).colorScheme.onSurface,
+              ),
             ),
           ),
         ),
