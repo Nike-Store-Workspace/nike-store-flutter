@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:nike_store_flutter/common/utils.dart';
 import 'package:nike_store_flutter/domain/models/banner.dart';
 import 'package:nike_store_flutter/presentation/widgets/image.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -14,7 +15,7 @@ class BannerSlider extends StatelessWidget {
     return Stack(
       children: [
         PageView.builder(
-          physics: BouncingScrollPhysics(),
+          physics: defaultScrollPhysics,
           controller: pageController,
           itemCount: banners.length,
           padEnds: true,
