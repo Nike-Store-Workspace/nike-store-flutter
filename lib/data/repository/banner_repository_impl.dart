@@ -12,7 +12,7 @@ class BannerRepositoryImpl implements IBannerRepository {
   BannerRepositoryImpl(this._datasource);
 
   @override
-  Future<List<NikeStoreBanner>> getAll(BannerLang lang) {
+  Future<List<NikeStoreBanner>> getAll(BannerLang lang) async {
     return _datasource.getAll(lang);
   }
 }

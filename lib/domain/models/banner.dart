@@ -20,7 +20,4 @@ class NikeStoreBanner {
   Map<String, dynamic> toJson() => {'id': id, 'name': name, 'address': address};
 }
 
-class BannerLang {
-  static const String fa = "fa";
-  static const String en = "en";
-}
+enum BannerLang { fa, en }

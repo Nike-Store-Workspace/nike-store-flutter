@@ -92,4 +92,5 @@ class ProductSort {
   static const String priceAsc = 'price_asc';
   static const String priceDesc = 'price_desc';
   static const String newest = 'newest';
+  static const String popular = 'popular';
 }

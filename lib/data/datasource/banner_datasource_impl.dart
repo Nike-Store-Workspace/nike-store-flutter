@@ -14,9 +14,12 @@ class BannerDatasourceImpl
   Future<List<NikeStoreBanner>> getAll(BannerLang lang) async {
     final response = await httpClient.get(
       '/banners',
-      queryParameters: {'lang': lang},
+      queryParameters: {'lang': lang.name},
     );
     validateHttpResponse(response);
+    if (response.data['data'] == null) {
+      throw Exception('Invalid response data: ${response.data}');
+    }
     final banners = <NikeStoreBanner>[];
     (response.data['data'] as List).forEach((element) {
       banners.add(NikeStoreBanner.fromJson(element));
