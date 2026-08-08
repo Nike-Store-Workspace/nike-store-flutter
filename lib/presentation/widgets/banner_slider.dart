@@ -25,7 +25,10 @@ class BannerSlider extends StatelessWidget {
               margin: const EdgeInsets.symmetric(horizontal: 16.0),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(16.0),
-                child: ImageLoadingService(imageUrl: banner.address),
+                child: ImageLoadingService(
+                  imageUrl: banner.address,
+                  boxFit: BoxFit.cover,
+                ),
               ),
             );
           },

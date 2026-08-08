@@ -27,12 +27,20 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           final popularProducts = await productRepository.getAll(
             ProductSort.popular,
           );
+          final cheapestProducts = await productRepository.getAll(
+            ProductSort.priceAsc,
+          );
+          final mostExpensiveProducts = await productRepository.getAll(
+            ProductSort.priceDesc,
+          );
 
           emit(
             HomeSuccess(
               banners: banners,
               latestProducts: latestProducts,
               popularProducts: popularProducts,
+              cheapestProducts: cheapestProducts,
+              mostExpensiveProducts: mostExpensiveProducts,
             ),
           );
         } catch (e) {

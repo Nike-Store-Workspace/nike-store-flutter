@@ -5,6 +5,7 @@ import 'package:nike_store_flutter/data/repository/banner_repository_impl.dart';
 import 'package:nike_store_flutter/data/repository/product_repository_impl.dart';
 import 'package:nike_store_flutter/gen/assets.gen.dart';
 import 'package:nike_store_flutter/presentation/home/bloc/home_bloc.dart';
+import 'package:nike_store_flutter/presentation/home/product_horizontal_list.dart';
 import 'package:nike_store_flutter/presentation/widgets/banner_slider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -13,6 +14,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    var textTheme = Theme.of(context).textTheme;
+
     return BlocProvider(
       create: (context) {
         final homeBloc = HomeBloc(productRepository, bannerRepository);
@@ -24,7 +27,7 @@ class HomeScreen extends StatelessWidget {
           builder: (context, state) {
             if (state is HomeSuccess) {
               return ListView.builder(
-                itemCount: 5,
+                itemCount: 6,
                 itemBuilder: (context, index) {
                   switch (index) {
                     case 0:
@@ -58,9 +61,24 @@ class HomeScreen extends StatelessWidget {
                         child: BannerSlider(banners: state.banners),
                       );
                     case 3:
-                      return const SizedBox(height: 20);
+                      return ProductHorizontalList(
+                        productList: state.latestProducts,
+                        widgetTitle: "جدیدترین",
+                        onMorePressed: () {},
+                      );
                     case 4:
-                      return const Text('Product Section');
+                      return ProductHorizontalList(
+                        productList: state.cheapestProducts,
+                        widgetTitle: "به صرفه‌‎ترین",
+                        onMorePressed: () {},
+                      );
+
+                    case 5:
+                      return ProductHorizontalList(
+                        productList: state.mostExpensiveProducts,
+                        widgetTitle: "گران‌ترین",
+                        onMorePressed: () {},
+                      );
                     default:
                       return const SizedBox.shrink();
                   }
