@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:nike_store_flutter/common/exception.dart';
 import 'package:nike_store_flutter/data/common/http_response_validator.dart';
 import 'package:nike_store_flutter/domain/datasource/product_datasource.dart';
 import 'package:nike_store_flutter/domain/models/product.dart';

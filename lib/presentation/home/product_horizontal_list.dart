@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nike_store_flutter/common/utils.dart';
 import 'package:nike_store_flutter/domain/models/product.dart';
+import 'package:nike_store_flutter/presentation/product_details/product_Details.dart';
 import 'package:nike_store_flutter/presentation/widgets/image.dart';
 
 class ProductHorizontalList extends StatelessWidget {
@@ -86,78 +87,88 @@ class _ProductItem extends StatelessWidget {
     var textTheme = Theme.of(context).textTheme;
     return Padding(
       padding: EdgeInsets.only(
-        right: (_isFirstItem) ? 16 : 8,
-        left: (_isLastItem) ? 16 : 8,
+        right: (_isFirstItem) ? 16 : 4,
+        left: (_isLastItem) ? 16 : 4,
       ),
-      child: SizedBox(
-        width: 200,
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                Container(
-                  height: 200,
-                  padding: const EdgeInsets.all(18.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    color: Theme.of(context).colorScheme.surface,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(16),
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => ProductDetails(product: product),
+            ),
+          );
+        },
+        child: SizedBox(
+          width: 200,
+          child: Stack(
+            children: [
+              Column(
+                children: [
+                  Container(
+                    height: 200,
+                    padding: const EdgeInsets.all(18.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      color: Theme.of(context).colorScheme.surface,
+                    ),
+                    child: ImageLoadingService(
+                      imageUrl: product.images.first,
+                      boxFit: BoxFit.contain,
+                    ),
                   ),
-                  child: ImageLoadingService(
-                    imageUrl: product.images.first,
-                    boxFit: BoxFit.contain,
-                  ),
-                ),
-                SizedBox(height: 12),
-                Padding(
-                  padding: EdgeInsetsGeometry.symmetric(horizontal: 8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        product.title,
-                        style: textTheme.titleSmall,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      SizedBox(height: 10),
-
-                      if (product.previousPriceToman != null) ...[
+                  SizedBox(height: 12),
+                  Padding(
+                    padding: EdgeInsetsGeometry.symmetric(horizontal: 8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
                         Text(
-                          product.previousPriceToman!.toPersianPrice,
-                          style: textTheme.labelMedium?.copyWith(
-                            decoration: TextDecoration.lineThrough,
-                            color: Colors.grey,
-                          ),
+                          product.title,
+                          style: textTheme.titleSmall,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        const SizedBox(height: 4),
+                        SizedBox(height: 10),
+
+                        if (product.previousPriceToman != null) ...[
+                          Text(
+                            product.previousPriceToman!.toPersianPrice,
+                            style: textTheme.labelMedium?.copyWith(
+                              decoration: TextDecoration.lineThrough,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                        ],
+
+                        SizedBox(height: 12),
+
+                        Text(
+                          product.priceToman.toPersianPrice,
+                          style: textTheme.labelLarge,
+                        ),
                       ],
-
-                      SizedBox(height: 12),
-
-                      Text(
-                        product.priceToman.toPersianPrice,
-                        style: textTheme.labelLarge,
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-
-            Positioned(
-              top: 12,
-              right: 12,
-              child: Container(
-                width: 36,
-                height: 36,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surfaceBright,
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: Icon(CupertinoIcons.heart, size: 22),
+                ],
               ),
-            ),
-          ],
+
+              Positioned(
+                top: 12,
+                right: 12,
+                child: Container(
+                  width: 36,
+                  height: 36,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.surfaceBright,
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: Icon(CupertinoIcons.heart, size: 22),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

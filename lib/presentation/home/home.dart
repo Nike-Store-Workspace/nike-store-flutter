@@ -85,17 +85,7 @@ class HomeScreen extends StatelessWidget {
                 },
               );
             } else if (state is HomeLoading) {
-              return Center(
-                child: Lottie.asset(
-                  (isDarkMode)
-                      ? 'assets/animations/nike_logo_animation_dark_theme.lottie'
-                      : 'assets/animations/nike_logo_animation_lite_theme.lottie',
-                  width: 150,
-                  height: 150,
-                  fit: BoxFit.cover,
-                  repeat: true,
-                ),
-              );
+              return Loading(isDarkMode: isDarkMode);
             } else if (state is HomeError) {
               return Center(
                 child: Column(
@@ -118,6 +108,27 @@ class HomeScreen extends StatelessWidget {
             }
           },
         ),
+      ),
+    );
+  }
+}
+
+class Loading extends StatelessWidget {
+  const Loading({super.key, required this.isDarkMode});
+
+  final bool isDarkMode;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Lottie.asset(
+        (isDarkMode)
+            ? 'assets/animations/nike_logo_animation_dark_theme.lottie'
+            : 'assets/animations/nike_logo_animation_lite_theme.lottie',
+        width: 150,
+        height: 150,
+        fit: BoxFit.cover,
+        repeat: true,
       ),
     );
   }
