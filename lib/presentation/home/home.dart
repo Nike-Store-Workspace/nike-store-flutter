@@ -120,16 +120,28 @@ class Loading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Lottie.asset(
-        (isDarkMode)
-            ? 'assets/animations/nike_logo_animation_dark_theme.lottie'
-            : 'assets/animations/nike_logo_animation_lite_theme.lottie',
-        width: 150,
-        height: 150,
-        fit: BoxFit.cover,
-        repeat: true,
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Center(
+          child: Lottie.asset(
+            (isDarkMode)
+                ? 'assets/animations/nike_logo_animation_dark_theme.lottie'
+                : 'assets/animations/nike_logo_animation_lite_theme.lottie',
+            width: 150,
+            height: 150,
+            fit: BoxFit.cover,
+            repeat: true,
+          ),
+        ),
+        Center(
+          child: Text(
+            'درحال بارگیری اطلاعات...',
+            style: Theme.of(context).textTheme.labelLarge,
+          ),
+        ),
+      ],
     );
   }
 }
