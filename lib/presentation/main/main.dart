@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nike_store_flutter/presentation/root.dart';
+import 'package:nike_store_flutter/presentation/auth/auth.dart';
 import 'package:nike_store_flutter/presentation/theme/MyTheme.dart';
 
 void main() {
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       home: Directionality(
         textDirection: TextDirection.rtl,
-        child: const RootScreen(),
+        child: const AuthScreen(),
       ),
     );
   }

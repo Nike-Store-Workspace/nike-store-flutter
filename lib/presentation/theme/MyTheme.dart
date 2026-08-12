@@ -10,6 +10,7 @@ class MyTheme {
   static const Color primaryTextColor = Color(0xFF262A35);
   static const Color secondaryTextColor = Color.fromARGB(255, 167, 166, 166);
   static const Color surfaceColor = Color.fromARGB(255, 240, 240, 240);
+  static const Color onSurface = Color(0xFF262A35);
 
   // --- پالت رنگی تم تاریک (Dark) ---
   static const Color darkBackgroundColor = Color(0xFF121212);
@@ -21,6 +22,7 @@ class MyTheme {
     166,
     166,
   );
+  static const Color onSurfaceDark = Color(0xFF262A35);
 
   // ☀️ تم روشن
   static ThemeData initTheme() {
