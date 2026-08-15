@@ -1,17 +1,21 @@
 import 'package:dio/dio.dart';
 
 class AppException implements Exception {
-  final String message;
+  final String messageEn;
+  final String messageFa;
 
-  AppException({this.message = 'خطای نامشخص!'});
+  AppException({required this.messageFa, required this.messageEn});
 }
 
 class ServerException extends AppException {
-  ServerException({super.message});
+  ServerException({required super.messageFa, required super.messageEn});
 }
 
 class NetworkException extends AppException {
-  NetworkException({super.message = 'اتصال اینترنت را بررسی کنید'});
+  NetworkException({
+    super.messageFa = 'اتصال اینترنت را بررسی کنید',
+    super.messageEn = 'Please check your internet connection',
+  });
 }
 
 extension ExceptionMapper on Object {
@@ -33,15 +37,27 @@ extension ExceptionMapper on Object {
           final responseData = dioError.response?.data;
           if (responseData is Map<String, dynamic> &&
               responseData['message'] != null) {
-            return ServerException(message: responseData['message'].toString());
+            return ServerException(
+              messageFa: responseData['message_fa'].toString(),
+              messageEn: responseData['message_en'].toString(),
+            );
           }
-          return ServerException(message: 'خطایی در پاسخ سرور رخ داد');
+          return ServerException(
+            messageFa: responseData['message_fa'].toString(),
+            messageEn: responseData['message_en'].toString(),
+          );
 
         default:
-          return NetworkException(message: 'ارتباط با سرور برقرار نشد');
+          return NetworkException(
+            messageFa: 'ارتباط با سرور برقرار نشد',
+            messageEn: 'Network connection error',
+          );
       }
     }
 
-    return AppException(message: 'خطای غیرمنتظره‌ای رخ داده است');
+    return AppException(
+      messageFa: 'خطای غیرمنتظره‌ای رخ داده است',
+      messageEn: 'Unknown exception occurred',
+    );
   }
 }

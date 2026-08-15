@@ -64,7 +64,7 @@ class CommentList extends StatelessWidget {
               child: Center(
                 child: Column(
                   children: [
-                    Text(state.exception.message),
+                    Text(state.exception.messageFa),
                     TextButton(
                       onPressed: () {
                         BlocProvider.of<CommentListBloc>(

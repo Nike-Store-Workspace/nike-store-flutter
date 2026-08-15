@@ -1,5 +1,6 @@
+import 'package:nike_store_flutter/data/common/api_response.dart';
 import 'package:nike_store_flutter/domain/models/banner.dart';
 
 abstract interface class IBannerRepository {
-  Future<List<NikeStoreBanner>> getAll(BannerLang lang);
+  Future<ApiResponse<List<NikeStoreBanner>>> getAll(BannerLang lang);
 }

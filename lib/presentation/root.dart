@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:nike_store_flutter/presentation/cart/cart.dart';
 import 'package:nike_store_flutter/presentation/home/home.dart';
 
 class RootScreen extends StatefulWidget {
@@ -95,7 +96,7 @@ class _RootScreenState extends State<RootScreen> {
             _buildTabNavigator(
               index: cartScreenIndex,
               navigatorKey: _cartKey,
-              child: const Center(child: Text('cart')),
+              child: const CartScreen(),
             ),
             _buildTabNavigator(
               index: profileScreenIndex,

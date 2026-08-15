@@ -1,4 +1,5 @@
 import 'package:nike_store_flutter/common/http_client.dart';
+import 'package:nike_store_flutter/data/common/api_response.dart';
 import 'package:nike_store_flutter/data/datasource/product_datasource_impl.dart';
 import 'package:nike_store_flutter/domain/datasource/product_datasource.dart';
 import 'package:nike_store_flutter/domain/models/product.dart';
@@ -14,12 +15,12 @@ class ProductRepositoryImpl implements IProductRepository {
   const ProductRepositoryImpl({required this._datasource});
 
   @override
-  Future<List<Product>> getAll(String sort) {
+  Future<ApiResponse<List<Product>>> getAll(String sort) {
     return _datasource.getAll(sort);
   }
 
   @override
-  Future<List<Product>> search(String searchTerm) {
+  Future<ApiResponse<List<Product>>> search(String searchTerm) {
     return _datasource.search(searchTerm);
   }
 }

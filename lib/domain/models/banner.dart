@@ -13,7 +13,7 @@ class NikeStoreBanner {
     return NikeStoreBanner(
       id: json['id'] as int,
       name: json['name'] as String,
-      address: json['address'] as String,
+      address: json['image'] as String,
     );
   }
 

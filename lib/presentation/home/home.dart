@@ -38,7 +38,7 @@ class HomeScreen extends StatelessWidget {
                           isDarkMode
                               ? Assets.img.nikeStorLogoDark.image(
                                   width: 130,
-                                  height: 60,
+                                  height: 80,
                                   fit: BoxFit.cover,
                                 )
                               : Assets.img.nikeStorLogoLite.image(
@@ -91,7 +91,7 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Center(child: Text(state.exception.message)),
+                    Center(child: Text(state.exception.messageFa)),
                     ElevatedButton(
                       onPressed: () {
                         BlocProvider.of<HomeBloc>(

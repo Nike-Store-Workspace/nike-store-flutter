@@ -36,11 +36,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
           emit(
             HomeSuccess(
-              banners: banners,
-              latestProducts: latestProducts,
-              popularProducts: popularProducts,
-              cheapestProducts: cheapestProducts,
-              mostExpensiveProducts: mostExpensiveProducts,
+              banners: banners.data ?? [],
+              latestProducts: latestProducts.data ?? [],
+              popularProducts: popularProducts.data ?? [],
+              cheapestProducts: cheapestProducts.data ?? [],
+              mostExpensiveProducts: mostExpensiveProducts.data ?? [],
             ),
           );
         } catch (e) {
@@ -48,7 +48,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             HomeError(
               exception: e is AppException
                   ? e
-                  : AppException(message: e.toString()),
+                  : AppException(
+                      messageEn: e.toString(),
+                      messageFa: e.toString(),
+                    ),
             ),
           );
         }

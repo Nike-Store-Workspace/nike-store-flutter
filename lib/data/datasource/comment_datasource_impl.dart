@@ -14,7 +14,9 @@ class RemoteCommentDatasourceImpl
   RemoteCommentDatasourceImpl({required this.httpClient});
 
   @override
-  Future<List<CommentModel>> getAllByProductId(int productId) async {
+  Future<ApiResponse<List<CommentModel>>> getAllByProductId(
+    int productId,
+  ) async {
     final response = await httpClient.get('comments/$productId');
     validateHttpResponse(response);
 
@@ -29,11 +31,13 @@ class RemoteCommentDatasourceImpl
           : [],
     );
 
-    // مدیریت خطای منطقی سرور و استخراج داده
     if (result.success && result.data != null) {
-      return result.data!;
+      return result;
     } else {
-      throw ServerException(message: result.message);
+      throw ServerException(
+        messageFa: result.messageFa,
+        messageEn: result.messageEn,
+      );
     }
   }
 }

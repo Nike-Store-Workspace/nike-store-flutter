@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:nike_store_flutter/data/repository/auth_repository_impl.dart';
 import 'package:nike_store_flutter/presentation/auth/auth.dart';
+import 'package:nike_store_flutter/presentation/root.dart';
 import 'package:nike_store_flutter/presentation/theme/MyTheme.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  authRepository.loadAuthInfo();
   runApp(const MyApp());
 }
 
@@ -19,7 +23,7 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       home: Directionality(
         textDirection: TextDirection.rtl,
-        child: const AuthScreen(),
+        child: const RootScreen(),
       ),
     );
   }
