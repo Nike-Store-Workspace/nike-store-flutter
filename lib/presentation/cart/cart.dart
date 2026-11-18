@@ -19,10 +19,11 @@ class CartScreen extends StatelessWidget {
         if (state is CartFailure) return Center(child: Column(mainAxisSize: MainAxisSize.min, children: [Text(state.message), TextButton(onPressed: () => context.read<CartBloc>().add(CartLoadRequested()), child: Text(en ? 'Retry' : 'تلاش دوباره'))]));
         final items = (state as CartLoaded).items;
         if (items.isEmpty) return Center(child: Text(en ? 'Your cart is empty' : 'سبد خرید شما خالی است'));
-        return ListView.builder(itemCount: items.length, itemBuilder: (context, i) { final item = items[i]; return ListTile(
+        final total = items.fold<int>(0, (sum, item) => sum + item.product.priceToman * item.quantity);
+        return Column(children: [Expanded(child: ListView.builder(itemCount: items.length, itemBuilder: (context, i) { final item = items[i]; return ListTile(
           leading: item.product.images.isEmpty ? const Icon(Icons.shopping_bag_outlined) : Image.network(item.product.images.first, width: 52, errorBuilder: (_, __, ___) => const Icon(Icons.shopping_bag_outlined)),
           title: Text(item.product.title), subtitle: Text('${item.product.priceToman} ${en ? 'Toman' : 'تومان'} · ${item.variant.color} · ${item.variant.size}'),
-          trailing: Wrap(mainAxisSize: MainAxisSize.min, children: [IconButton(onPressed: () => context.read<CartBloc>().add(CartItemDecreaseRequested(item.id)), icon: const Icon(Icons.remove)), Text('${item.quantity}'), IconButton(onPressed: () => context.read<CartBloc>().add(CartItemIncreaseRequested(item.id)), icon: const Icon(Icons.add)), IconButton(onPressed: () => context.read<CartBloc>().add(CartItemRemoveRequested(item.id)), icon: const Icon(Icons.delete_outline))])); });
+          trailing: Wrap(mainAxisSize: MainAxisSize.min, children: [IconButton(onPressed: () => context.read<CartBloc>().add(CartItemDecreaseRequested(item.id)), icon: const Icon(Icons.remove)), Text('${item.quantity}'), IconButton(onPressed: () => context.read<CartBloc>().add(CartItemIncreaseRequested(item.id)), icon: const Icon(Icons.add)), IconButton(onPressed: () => context.read<CartBloc>().add(CartItemRemoveRequested(item.id)), icon: const Icon(Icons.delete_outline))])); })), Padding(padding: const EdgeInsets.all(16), child: Text('${en ? 'Total' : 'جمع کل'}: $total ${en ? 'Toman' : 'تومان'}'))]);
       }));
     }),
   );

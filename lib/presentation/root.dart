@@ -113,15 +113,15 @@ class _RootScreenState extends State<RootScreen> {
                 items: const [
                   BottomNavigationBarItem(
                     icon: Icon(CupertinoIcons.home),
-                    label: 'خانه',
+                    label: AppPreferences.locale.value.languageCode == 'en' ? 'Home' : 'خانه',
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(CupertinoIcons.cart),
-                    label: 'سبد خرید',
+                    label: AppPreferences.locale.value.languageCode == 'en' ? 'Cart' : 'سبد خرید',
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(CupertinoIcons.person),
-                    label: 'پروفایل',
+                    label: AppPreferences.locale.value.languageCode == 'en' ? 'Settings' : 'تنظیمات',
                   ),
                 ],
               )

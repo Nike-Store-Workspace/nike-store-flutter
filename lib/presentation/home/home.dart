@@ -7,12 +7,14 @@ import 'package:nike_store_flutter/gen/assets.gen.dart';
 import 'package:nike_store_flutter/presentation/home/bloc/home_bloc.dart';
 import 'package:nike_store_flutter/presentation/home/product_horizontal_list.dart';
 import 'package:nike_store_flutter/presentation/widgets/banner_slider.dart';
+import 'package:nike_store_flutter/presentation/settings/app_preferences.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final en = AppPreferences.locale.value.languageCode == 'en';
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     var textTheme = Theme.of(context).textTheme;
 
@@ -63,20 +65,20 @@ class HomeScreen extends StatelessWidget {
                     case 3:
                       return ProductHorizontalList(
                         productList: state.latestProducts,
-                        widgetTitle: "جدیدترین",
+                        widgetTitle: en ? 'Newest' : "جدیدترین",
                         onMorePressed: () {},
                       );
                     case 4:
                       return ProductHorizontalList(
                         productList: state.cheapestProducts,
-                        widgetTitle: "به صرفه‌‎ترین",
+                        widgetTitle: en ? 'Best value' : "به صرفه‌‎ترین",
                         onMorePressed: () {},
                       );
 
                     case 5:
                       return ProductHorizontalList(
                         productList: state.mostExpensiveProducts,
-                        widgetTitle: "گران‌ترین",
+                        widgetTitle: en ? 'Most expensive' : "گران‌ترین",
                         onMorePressed: () {},
                       );
                     default:
@@ -91,7 +93,7 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Center(child: Text(state.exception.messageFa)),
+                    Center(child: Text(en ? state.exception.messageEn : state.exception.messageFa)),
                     ElevatedButton(
                       onPressed: () {
                         BlocProvider.of<HomeBloc>(
@@ -137,7 +139,7 @@ class Loading extends StatelessWidget {
         ),
         Center(
           child: Text(
-            'درحال بارگیری اطلاعات...',
+            AppPreferences.locale.value.languageCode == 'en' ? 'Loading...' : 'درحال بارگیری اطلاعات...',
             style: Theme.of(context).textTheme.labelLarge,
           ),
         ),

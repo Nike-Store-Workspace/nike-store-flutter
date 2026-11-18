@@ -4,6 +4,7 @@ import 'package:nike_store_flutter/common/utils.dart';
 import 'package:nike_store_flutter/domain/models/product.dart';
 import 'package:nike_store_flutter/presentation/product_details/product_Details.dart';
 import 'package:nike_store_flutter/presentation/widgets/image.dart';
+import 'package:nike_store_flutter/presentation/settings/app_preferences.dart';
 
 class ProductHorizontalList extends StatelessWidget {
   final List<Product> productList;
@@ -39,7 +40,7 @@ class ProductHorizontalList extends StatelessWidget {
                 TextButton(
                   onPressed: onMorePressed,
                   child: Text(
-                    'بیشتر',
+                    AppPreferences.locale.value.languageCode == 'en' ? 'More' : 'بیشتر',
                     style: textTheme.titleSmall?.apply(
                       color: Colors.blueAccent,
                     ),

@@ -8,6 +8,7 @@ import 'package:nike_store_flutter/domain/models/signup_request.dart';
 import 'package:nike_store_flutter/gen/assets.gen.dart';
 import 'package:nike_store_flutter/presentation/auth/bloc/auth_bloc.dart';
 import 'package:nike_store_flutter/presentation/theme/MyTheme.dart';
+import 'package:nike_store_flutter/presentation/settings/app_preferences.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -103,10 +104,11 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final en = AppPreferences.locale.value.languageCode == 'en';
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final themeData = Theme.of(context);
     return Directionality(
-      textDirection: TextDirection.rtl,
+      textDirection: en ? TextDirection.ltr : TextDirection.rtl,
       child: Theme(
         data: themeData.copyWith(
           elevatedButtonTheme: ElevatedButtonThemeData(
@@ -133,7 +135,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   Navigator.of(context).pop();
                 } else if (state is AuthErrorState) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(state.exception.messageFa)),
+                    SnackBar(content: Text(en ? state.exception.messageEn : state.exception.messageFa)),
                   );
                 }
               });
@@ -169,16 +171,16 @@ class _AuthScreenState extends State<AuthScreen> {
                           SizedBox(height: 50),
                           Text(
                             state.isLoginMode
-                                ? 'به نایک استور خوش آمدید'
-                                : 'ثبت نام',
+                                ? (en ? 'Welcome to Nike Store' : 'به نایک استور خوش آمدید')
+                                : (en ? 'Create account' : 'ثبت نام'),
                             style: Theme.of(context).textTheme.labelLarge,
                           ),
                           SizedBox(height: 8),
 
                           Text(
                             state.isLoginMode
-                                ? 'لطفا وارد حساب کاربری خود شوید، یا ثبت نام کنید'
-                                : 'لطفا اطلاعات خواسته شده را تکمیل کنید',
+                                ? (en ? 'Sign in or create an account' : 'لطفا وارد حساب کاربری خود شوید، یا ثبت نام کنید')
+                                : (en ? 'Please complete the required information' : 'لطفا اطلاعات خواسته شده را تکمیل کنید'),
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                           SizedBox(height: 30),
@@ -189,11 +191,11 @@ class _AuthScreenState extends State<AuthScreen> {
                               keyboardType: TextInputType.text,
                               validator: (value) => _requiredValidator(
                                 value,
-                                'نام و نام خانوادگی',
+                                en ? 'Full name' : 'نام و نام خانوادگی',
                               ),
 
                               decoration: InputDecoration(
-                                label: Text('نام و نام خانوادگی'),
+                                label: Text(en ? 'Full name' : 'نام و نام خانوادگی'),
                               ),
                             ),
                             SizedBox(height: 16),
@@ -203,13 +205,13 @@ class _AuthScreenState extends State<AuthScreen> {
                             controller: _emailController,
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
-                              label: Text('آدرس ایمیل'),
+                              label: Text(en ? 'Email address' : 'آدرس ایمیل'),
                             ),
                             validator: _emailValidator,
                           ),
                           SizedBox(height: 16),
                           _PasswordTextFIeld(
-                            label: 'رمز عبور',
+                            label: en ? 'Password' : 'رمز عبور',
                             passwordController: _passwordController,
                             validator: _confirmPasswordValidator,
                           ),
@@ -217,7 +219,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           if (!state.isLoginMode) ...[
                             SizedBox(height: 16),
                             _PasswordTextFIeld(
-                              label: 'تکرار رمز عبور',
+                            label: en ? 'Confirm password' : 'تکرار رمز عبور',
                               passwordController: _confirmPasswordController,
                               validator: _confirmPasswordValidator,
                             ),
@@ -235,7 +237,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                       strokeWidth: 2,
                                     ),
                                   )
-                                : Text(state.isLoginMode ? 'ورود' : 'ثبت نام'),
+                                : Text(state.isLoginMode ? (en ? 'Sign in' : 'ورود') : (en ? 'Sign up' : 'ثبت نام')),
                           ),
                           SizedBox(height: 24),
 
@@ -244,8 +246,8 @@ class _AuthScreenState extends State<AuthScreen> {
                             children: [
                               Text(
                                 state.isLoginMode
-                                    ? 'حساب کاربری ندارید؟ '
-                                    : 'حساب کاربری دارید؟',
+                                    ? (en ? "Don't have an account?" : 'حساب کاربری ندارید؟ ')
+                                    : (en ? 'Already have an account?' : 'حساب کاربری دارید؟'),
                               ),
                               SizedBox(width: 12),
 
@@ -256,7 +258,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                   ).add(AuthModeChangeIsClickedEvent());
                                 },
                                 child: Text(
-                                  state.isLoginMode ? 'ثبت نام' : 'ورود',
+                                  state.isLoginMode ? (en ? 'Sign up' : 'ثبت نام') : (en ? 'Sign in' : 'ورود'),
                                   style: TextStyle(
                                     color: themeData.colorScheme.primary,
                                     decoration: TextDecoration.underline,

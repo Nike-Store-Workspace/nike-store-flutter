@@ -5,6 +5,7 @@ import 'package:nike_store_flutter/data/repository/comment_repository_impl.dart'
 import 'package:nike_store_flutter/domain/models/comment.dart';
 import 'package:nike_store_flutter/presentation/home/home.dart';
 import 'package:nike_store_flutter/presentation/product_details/comments/bloc/comment_list_bloc.dart';
+import 'package:nike_store_flutter/presentation/settings/app_preferences.dart';
 
 class CommentList extends StatelessWidget {
   final int productId;
@@ -13,6 +14,7 @@ class CommentList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final en = AppPreferences.locale.value.languageCode == 'en';
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final textTheme = Theme.of(context).textTheme;
 
@@ -34,7 +36,7 @@ class CommentList extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 100.0),
                       child: Center(
                         child: Text(
-                          'نظری ثبت نشده! \n تو اولین نفر باش🎉',
+                          en ? 'No reviews yet.\nBe the first! 🎉' : 'نظری ثبت نشده! \n تو اولین نفر باش🎉',
                           textAlign: TextAlign.center,
                           style: textTheme.labelLarge,
                         ),
@@ -64,14 +66,14 @@ class CommentList extends StatelessWidget {
               child: Center(
                 child: Column(
                   children: [
-                    Text(state.exception.messageFa),
+                    Text(en ? state.exception.messageEn : state.exception.messageFa),
                     TextButton(
                       onPressed: () {
                         BlocProvider.of<CommentListBloc>(
                           context,
                         ).add(CommentListStarted(productId: productId));
                       },
-                      child: const Text('Retry'),
+                      child: Text(en ? 'Retry' : 'تلاش دوباره'),
                     ),
                   ],
                 ),
@@ -99,6 +101,7 @@ class CommentItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final en = AppPreferences.locale.value.languageCode == 'en';
     final textTheme = Theme.of(context).textTheme;
     final double bottomPadding = (isLastItem == true ? 150 : 0);
     return Padding(
@@ -127,24 +130,24 @@ class CommentItem extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(commentModel.titleFa!, style: textTheme.titleSmall),
+                      Text((en ? commentModel.titleEn : commentModel.titleFa) ?? '', style: textTheme.titleSmall),
                       SizedBox(height: 3),
                       Text(
-                        'توسط ${commentModel.userName!}',
+                        en ? 'By ${commentModel.userName ?? ''}' : 'توسط ${commentModel.userName ?? ''}',
                         style: textTheme.labelMedium,
                       ),
                     ],
                   ),
 
                   Text(
-                    commentModel.createdAt!.toPersianDate,
+                    commentModel.createdAt == null ? '' : (en ? MaterialLocalizations.of(context).formatShortDate(commentModel.createdAt!) : commentModel.createdAt!.toPersianDate),
                     style: textTheme.labelMedium,
                   ),
                 ],
               ),
               SizedBox(height: 16),
 
-              Text(commentModel.body!, style: textTheme.bodyMedium),
+              Text(commentModel.body ?? '', style: textTheme.bodyMedium),
             ],
           ),
         ),
