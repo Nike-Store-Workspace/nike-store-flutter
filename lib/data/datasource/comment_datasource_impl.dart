@@ -17,7 +17,10 @@ class RemoteCommentDatasourceImpl
   Future<ApiResponse<List<CommentModel>>> getAllByProductId(
     int productId,
   ) async {
-    final response = await httpClient.get('comments/$productId', queryParameters: {'lang': AppPreferences.locale.value.languageCode});
+    final response = await httpClient.get(
+      'comments/$productId',
+      queryParameters: {'lang': AppPreferences.locale.value.languageCode},
+    );
     validateHttpResponse(response);
 
     final result = ApiResponse<List<CommentModel>>.fromJson(

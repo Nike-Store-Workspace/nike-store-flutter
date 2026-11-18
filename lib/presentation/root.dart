@@ -110,18 +110,24 @@ class _RootScreenState extends State<RootScreen> {
             ? BottomNavigationBar(
                 currentIndex: selectedScreenIndex,
                 onTap: _selectTab,
-                items: const [
+                items: [
                   BottomNavigationBarItem(
                     icon: Icon(CupertinoIcons.home),
-                    label: AppPreferences.locale.value.languageCode == 'en' ? 'Home' : 'خانه',
+                    label: AppPreferences.locale.value.languageCode == 'en'
+                        ? 'Home'
+                        : 'خانه',
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(CupertinoIcons.cart),
-                    label: AppPreferences.locale.value.languageCode == 'en' ? 'Cart' : 'سبد خرید',
+                    label: AppPreferences.locale.value.languageCode == 'en'
+                        ? 'Cart'
+                        : 'سبد خرید',
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(CupertinoIcons.person),
-                    label: AppPreferences.locale.value.languageCode == 'en' ? 'Settings' : 'تنظیمات',
+                    label: AppPreferences.locale.value.languageCode == 'en'
+                        ? 'Settings'
+                        : 'تنظیمات',
                   ),
                 ],
               )
@@ -183,10 +189,55 @@ class _SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final en = AppPreferences.locale.value.languageCode == 'en';
-    return Scaffold(appBar: AppBar(title: Text(en ? 'Settings' : 'تنظیمات')), body: ListView(children: [
-      ListTile(title: Text(en ? 'Language' : 'زبان'), trailing: DropdownButton<String>(value: AppPreferences.locale.value.languageCode, items: [DropdownMenuItem(value: 'fa', child: Text(en ? 'Persian' : 'فارسی')), DropdownMenuItem(value: 'en', child: Text(en ? 'English' : 'انگلیسی'))], onChanged: (v) { if (v != null) AppPreferences.setLocale(Locale(v)); })),
-      ListTile(title: Text(en ? 'Theme' : 'پوسته'), trailing: DropdownButton<ThemeMode>(value: AppPreferences.themeMode.value, items: [DropdownMenuItem(value: ThemeMode.system, child: Text(en ? 'System' : 'سیستم')), DropdownMenuItem(value: ThemeMode.light, child: Text(en ? 'Light' : 'روشن')), DropdownMenuItem(value: ThemeMode.dark, child: Text(en ? 'Dark' : 'تیره'))], onChanged: (v) { if (v != null) AppPreferences.setTheme(v); })),
-    ]));
+    return Scaffold(
+      appBar: AppBar(title: Text(en ? 'Settings' : 'تنظیمات')),
+      body: ListView(
+        children: [
+          ListTile(
+            title: Text(en ? 'Language' : 'زبان'),
+            trailing: DropdownButton<String>(
+              value: AppPreferences.locale.value.languageCode,
+              items: [
+                DropdownMenuItem(
+                  value: 'fa',
+                  child: Text(en ? 'Persian' : 'فارسی'),
+                ),
+                DropdownMenuItem(
+                  value: 'en',
+                  child: Text(en ? 'English' : 'انگلیسی'),
+                ),
+              ],
+              onChanged: (v) {
+                if (v != null) AppPreferences.setLocale(Locale(v));
+              },
+            ),
+          ),
+          ListTile(
+            title: Text(en ? 'Theme' : 'پوسته'),
+            trailing: DropdownButton<ThemeMode>(
+              value: AppPreferences.themeMode.value,
+              items: [
+                DropdownMenuItem(
+                  value: ThemeMode.system,
+                  child: Text(en ? 'System' : 'سیستم'),
+                ),
+                DropdownMenuItem(
+                  value: ThemeMode.light,
+                  child: Text(en ? 'Light' : 'روشن'),
+                ),
+                DropdownMenuItem(
+                  value: ThemeMode.dark,
+                  child: Text(en ? 'Dark' : 'تیره'),
+                ),
+              ],
+              onChanged: (v) {
+                if (v != null) AppPreferences.setTheme(v);
+              },
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 

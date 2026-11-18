@@ -14,7 +14,10 @@ final httpClient = Dio(BaseOptions(baseUrl: baseUrl))
         final authInfo =
             AuthRepositoryImpl.authChangeNotifier.value?.token ?? "";
 
-        options.queryParameters.putIfAbsent('lang', () => AppPreferences.locale.value.languageCode);
+        options.queryParameters.putIfAbsent(
+          'lang',
+          () => AppPreferences.locale.value.languageCode,
+        );
         if (authInfo.isNotEmpty) {
           options.headers['Authorization'] =
               'Bearer ${AuthRepositoryImpl.authChangeNotifier.value?.token ?? ""}';

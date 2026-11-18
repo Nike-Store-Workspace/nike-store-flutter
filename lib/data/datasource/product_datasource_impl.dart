@@ -13,7 +13,13 @@ class RemoteProductDatasourceImpl
 
   @override
   Future<ApiResponse<List<Product>>> getAll(String sort) async {
-    final response = await httpClient.get('products', queryParameters: {'sort': sort, 'lang': AppPreferences.locale.value.languageCode});
+    final response = await httpClient.get(
+      'products',
+      queryParameters: {
+        'sort': sort,
+        'lang': AppPreferences.locale.value.languageCode,
+      },
+    );
     validateHttpResponse(response);
 
     final products = <Product>[];
@@ -28,7 +34,13 @@ class RemoteProductDatasourceImpl
 
   @override
   Future<ApiResponse<List<Product>>> search(String searchTerm) async {
-    final response = await httpClient.get('search-products', queryParameters: {'s': searchTerm, 'lang': AppPreferences.locale.value.languageCode});
+    final response = await httpClient.get(
+      'search-products',
+      queryParameters: {
+        's': searchTerm,
+        'lang': AppPreferences.locale.value.languageCode,
+      },
+    );
     validateHttpResponse(response);
 
     final products = <Product>[];

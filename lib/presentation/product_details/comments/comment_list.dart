@@ -36,7 +36,9 @@ class CommentList extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 100.0),
                       child: Center(
                         child: Text(
-                          en ? 'No reviews yet.\nBe the first! 🎉' : 'نظری ثبت نشده! \n تو اولین نفر باش🎉',
+                          en
+                              ? 'No reviews yet.\nBe the first! 🎉'
+                              : 'نظری ثبت نشده! \n تو اولین نفر باش🎉',
                           textAlign: TextAlign.center,
                           style: textTheme.labelLarge,
                         ),
@@ -66,7 +68,11 @@ class CommentList extends StatelessWidget {
               child: Center(
                 child: Column(
                   children: [
-                    Text(en ? state.exception.messageEn : state.exception.messageFa),
+                    Text(
+                      en
+                          ? state.exception.messageEn
+                          : state.exception.messageFa,
+                    ),
                     TextButton(
                       onPressed: () {
                         BlocProvider.of<CommentListBloc>(
@@ -130,17 +136,29 @@ class CommentItem extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text((en ? commentModel.titleEn : commentModel.titleFa) ?? '', style: textTheme.titleSmall),
+                      Text(
+                        (en ? commentModel.titleEn : commentModel.titleFa) ??
+                            '',
+                        style: textTheme.titleSmall,
+                      ),
                       SizedBox(height: 3),
                       Text(
-                        en ? 'By ${commentModel.userName ?? ''}' : 'توسط ${commentModel.userName ?? ''}',
+                        en
+                            ? 'By ${commentModel.userName ?? ''}'
+                            : 'توسط ${commentModel.userName ?? ''}',
                         style: textTheme.labelMedium,
                       ),
                     ],
                   ),
 
                   Text(
-                    commentModel.createdAt == null ? '' : (en ? MaterialLocalizations.of(context).formatShortDate(commentModel.createdAt!) : commentModel.createdAt!.toPersianDate),
+                    commentModel.createdAt == null
+                        ? ''
+                        : (en
+                              ? MaterialLocalizations.of(
+                                  context,
+                                ).formatShortDate(commentModel.createdAt!)
+                              : commentModel.createdAt!.toPersianDate),
                     style: textTheme.labelMedium,
                   ),
                 ],

@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nike_store_flutter/common/utils.dart';
 import 'package:nike_store_flutter/data/repository/cart_repository_impl.dart';
 import 'package:nike_store_flutter/domain/models/product.dart';
-import 'package:nike_store_flutter/presentation/auth/bloc/auth_bloc.dart';
 import 'package:nike_store_flutter/presentation/product_details/bloc/product_details_bloc.dart';
 import 'package:nike_store_flutter/presentation/product_details/comments/comment_list.dart';
 import 'package:nike_store_flutter/presentation/widgets/image.dart';
@@ -34,12 +33,16 @@ class _ProductDetailsState extends State<ProductDetails> {
         child: BlocListener<ProductDetailsBloc, ProductDetailsState>(
           listener: (context, state) {
             if (state is ProductAddedToCartSuccess) {
-              ScaffoldMessenger.of(
-                context,
-                ).showSnackBar(SnackBar(content: Text(en ? state.messageEn : state.messageFa)));
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(en ? state.messageEn : state.messageFa)),
+              );
             } else if (state is ProductAddToCartError) {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(en ? state.exception.messageEn : state.exception.messageFa)),
+                SnackBar(
+                  content: Text(
+                    en ? state.exception.messageEn : state.exception.messageFa,
+                  ),
+                ),
               );
             }
           },
@@ -127,8 +130,34 @@ class _ProductDetailsState extends State<ProductDetails> {
                               child: Text(product.description),
                             ),
                             if (product.variants.isNotEmpty) ...[
-                              Text(en ? 'Choose size and color' : 'انتخاب رنگ و سایز', style: textTheme.titleSmall),
-                              Wrap(spacing: 8, children: product.variants.where((v) => v.stock > 0).map((v) => ChoiceChip(label: Text('${v.color} · ${v.size}'), selected: selectedVariantId == v.id || (selectedVariantId == null && v == product.variants.firstWhere((x) => x.stock > 0, orElse: () => v)), onSelected: (_) => setState(() => selectedVariantId = v.id))).toList()),
+                              Text(
+                                en
+                                    ? 'Choose size and color'
+                                    : 'انتخاب رنگ و سایز',
+                                style: textTheme.titleSmall,
+                              ),
+                              Wrap(
+                                spacing: 8,
+                                children: product.variants
+                                    .where((v) => v.stock > 0)
+                                    .map(
+                                      (v) => ChoiceChip(
+                                        label: Text('${v.color} · ${v.size}'),
+                                        selected:
+                                            selectedVariantId == v.id ||
+                                            (selectedVariantId == null &&
+                                                v ==
+                                                    product.variants.firstWhere(
+                                                      (x) => x.stock > 0,
+                                                      orElse: () => v,
+                                                    )),
+                                        onSelected: (_) => setState(
+                                          () => selectedVariantId = v.id,
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
                             ],
                             Padding(
                               padding: const EdgeInsets.only(
@@ -180,7 +209,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                       final bloc = context.read<ProductDetailsBloc>();
                       bloc.add(ProductAddToCartLoadingEvent());
 
-                      final variant = product.variants.where((v) => v.stock > 0).where((v) => v.id == selectedVariantId).firstOrNull ?? product.variants.where((v) => v.stock > 0).firstOrNull;
+                      final variant =
+                          product.variants
+                              .where((v) => v.stock > 0)
+                              .where((v) => v.id == selectedVariantId)
+                              .firstOrNull ??
+                          product.variants
+                              .where((v) => v.stock > 0)
+                              .firstOrNull;
                       if (variant != null) {
                         bloc.add(
                           CartAddButtonPressed(

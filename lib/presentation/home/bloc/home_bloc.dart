@@ -16,12 +16,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   HomeBloc(this.productRepository, this.bannerRepository)
     : super(HomeLoading()) {
+    AppPreferences.locale.addListener(_onLocaleChanged);
     on<HomeEvent>((event, emit) async {
       if (event is HomeStartedEvent || event is HomeRefreshEvent) {
         try {
           emit(HomeLoading());
           await Future.delayed(const Duration(seconds: 0));
-          final lang = AppPreferences.locale.value.languageCode == 'en' ? BannerLang.en : BannerLang.fa;
+          final lang = AppPreferences.locale.value.languageCode == 'en'
+              ? BannerLang.en
+              : BannerLang.fa;
           final banners = await bannerRepository.getAll(lang);
           final latestProducts = await productRepository.getAll(
             ProductSort.newest,
@@ -59,5 +62,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         }
       }
     });
+  }
+
+  void _onLocaleChanged() => add(HomeRefreshEvent());
+
+  @override
+  Future<void> close() {
+    AppPreferences.locale.removeListener(_onLocaleChanged);
+    return super.close();
   }
 }

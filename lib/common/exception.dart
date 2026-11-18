@@ -35,16 +35,19 @@ extension ExceptionMapper on Object {
 
         case DioExceptionType.badResponse:
           final responseData = dioError.response?.data;
-          if (responseData is Map<String, dynamic> &&
-              responseData['message'] != null) {
+          if (responseData is Map<String, dynamic>) {
             return ServerException(
-              messageFa: responseData['message_fa'].toString(),
-              messageEn: responseData['message_en'].toString(),
+              messageFa:
+                  responseData['message_fa']?.toString() ??
+                  'درخواست ناموفق بود',
+              messageEn:
+                  responseData['message_en']?.toString() ??
+                  'The request failed',
             );
           }
           return ServerException(
-            messageFa: responseData['message_fa'].toString(),
-            messageEn: responseData['message_en'].toString(),
+            messageFa: 'درخواست ناموفق بود',
+            messageEn: 'The request failed',
           );
 
         default:

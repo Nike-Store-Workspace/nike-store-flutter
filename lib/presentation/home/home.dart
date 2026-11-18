@@ -16,8 +16,6 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final en = AppPreferences.locale.value.languageCode == 'en';
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    var textTheme = Theme.of(context).textTheme;
-
     return BlocProvider(
       create: (context) {
         final homeBloc = HomeBloc(productRepository, bannerRepository);
@@ -93,7 +91,13 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Center(child: Text(en ? state.exception.messageEn : state.exception.messageFa)),
+                    Center(
+                      child: Text(
+                        en
+                            ? state.exception.messageEn
+                            : state.exception.messageFa,
+                      ),
+                    ),
                     ElevatedButton(
                       onPressed: () {
                         BlocProvider.of<HomeBloc>(
@@ -139,7 +143,9 @@ class Loading extends StatelessWidget {
         ),
         Center(
           child: Text(
-            AppPreferences.locale.value.languageCode == 'en' ? 'Loading...' : 'درحال بارگیری اطلاعات...',
+            AppPreferences.locale.value.languageCode == 'en'
+                ? 'Loading...'
+                : 'درحال بارگیری اطلاعات...',
             style: Theme.of(context).textTheme.labelLarge,
           ),
         ),

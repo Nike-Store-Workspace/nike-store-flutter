@@ -40,7 +40,9 @@ class ProductHorizontalList extends StatelessWidget {
                 TextButton(
                   onPressed: onMorePressed,
                   child: Text(
-                    AppPreferences.locale.value.languageCode == 'en' ? 'More' : 'بیشتر',
+                    AppPreferences.locale.value.languageCode == 'en'
+                        ? 'More'
+                        : 'بیشتر',
                     style: textTheme.titleSmall?.apply(
                       color: Colors.blueAccent,
                     ),
@@ -75,7 +77,6 @@ class _ProductItem extends StatelessWidget {
   final bool _isFirstItem;
   final bool _isLastItem;
   const _ProductItem({
-    super.key,
     required this.product,
     required this._isFirstItem,
     required this._isLastItem,
