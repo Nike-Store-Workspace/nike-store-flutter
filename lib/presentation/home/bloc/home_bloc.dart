@@ -5,6 +5,7 @@ import 'package:nike_store_flutter/domain/models/banner.dart';
 import 'package:nike_store_flutter/domain/models/product.dart';
 import 'package:nike_store_flutter/domain/repository/banner_repository.dart';
 import 'package:nike_store_flutter/domain/repository/product_repository.dart';
+import 'package:nike_store_flutter/presentation/settings/app_preferences.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';
@@ -19,8 +20,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       if (event is HomeStartedEvent || event is HomeRefreshEvent) {
         try {
           emit(HomeLoading());
-          await Future.delayed(const Duration(seconds: 5));
-          final banners = await bannerRepository.getAll(BannerLang.fa);
+          await Future.delayed(const Duration(seconds: 0));
+          final lang = AppPreferences.locale.value.languageCode == 'en' ? BannerLang.en : BannerLang.fa;
+          final banners = await bannerRepository.getAll(lang);
           final latestProducts = await productRepository.getAll(
             ProductSort.newest,
           );

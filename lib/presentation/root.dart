@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nike_store_flutter/presentation/cart/cart.dart';
 import 'package:nike_store_flutter/presentation/home/home.dart';
+import 'package:nike_store_flutter/presentation/settings/app_preferences.dart';
 
 class RootScreen extends StatefulWidget {
   const RootScreen({super.key});
@@ -101,7 +102,7 @@ class _RootScreenState extends State<RootScreen> {
             _buildTabNavigator(
               index: profileScreenIndex,
               navigatorKey: _profileKey,
-              child: const Center(child: Text('profile')),
+              child: const _SettingsScreen(),
             ),
           ],
         ),
@@ -174,6 +175,18 @@ class _RootScreenState extends State<RootScreen> {
         ],
       ),
     );
+  }
+}
+
+class _SettingsScreen extends StatelessWidget {
+  const _SettingsScreen();
+  @override
+  Widget build(BuildContext context) {
+    final en = AppPreferences.locale.value.languageCode == 'en';
+    return Scaffold(appBar: AppBar(title: Text(en ? 'Settings' : 'تنظیمات')), body: ListView(children: [
+      ListTile(title: Text(en ? 'Language' : 'زبان'), trailing: DropdownButton<String>(value: AppPreferences.locale.value.languageCode, items: [DropdownMenuItem(value: 'fa', child: Text(en ? 'Persian' : 'فارسی')), DropdownMenuItem(value: 'en', child: Text(en ? 'English' : 'انگلیسی'))], onChanged: (v) { if (v != null) AppPreferences.setLocale(Locale(v)); })),
+      ListTile(title: Text(en ? 'Theme' : 'پوسته'), trailing: DropdownButton<ThemeMode>(value: AppPreferences.themeMode.value, items: [DropdownMenuItem(value: ThemeMode.system, child: Text(en ? 'System' : 'سیستم')), DropdownMenuItem(value: ThemeMode.light, child: Text(en ? 'Light' : 'روشن')), DropdownMenuItem(value: ThemeMode.dark, child: Text(en ? 'Dark' : 'تیره'))], onChanged: (v) { if (v != null) AppPreferences.setTheme(v); })),
+    ]));
   }
 }
 

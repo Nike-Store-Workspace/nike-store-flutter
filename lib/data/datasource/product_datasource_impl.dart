@@ -3,6 +3,7 @@ import 'package:nike_store_flutter/data/common/api_response.dart';
 import 'package:nike_store_flutter/data/common/http_response_validator.dart';
 import 'package:nike_store_flutter/domain/datasource/product_datasource.dart';
 import 'package:nike_store_flutter/domain/models/product.dart';
+import 'package:nike_store_flutter/presentation/settings/app_preferences.dart';
 
 class RemoteProductDatasourceImpl
     with HttpResponseValidator
@@ -12,7 +13,7 @@ class RemoteProductDatasourceImpl
 
   @override
   Future<ApiResponse<List<Product>>> getAll(String sort) async {
-    final response = await httpClient.get('products?sort=$sort');
+    final response = await httpClient.get('products', queryParameters: {'sort': sort, 'lang': AppPreferences.locale.value.languageCode});
     validateHttpResponse(response);
 
     final products = <Product>[];
@@ -27,7 +28,7 @@ class RemoteProductDatasourceImpl
 
   @override
   Future<ApiResponse<List<Product>>> search(String searchTerm) async {
-    final response = await httpClient.get('pro ducts?sort=$searchTerm');
+    final response = await httpClient.get('search-products', queryParameters: {'s': searchTerm, 'lang': AppPreferences.locale.value.languageCode});
     validateHttpResponse(response);
 
     final products = <Product>[];
